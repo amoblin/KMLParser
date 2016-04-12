@@ -35,10 +35,15 @@
 // Represents a KML <Style> element.  <Style> elements may either be specified
 // at the top level of the KML document with identifiers or they may be
 // specified anonymously within a Geometry element.
-@interface KMLStyle : KMLElement {    
+@interface KMLStyle : KMLElement {
+#if TARGET_OS_IPHONE
     UIColor *strokeColor;
-    CGFloat strokeWidth;
     UIColor *fillColor;
+#else
+    NSColor *strokeColor;
+    NSColor *fillColor;
+#endif
+    CGFloat strokeWidth;
     
     BOOL fill;
     BOOL stroke;
@@ -224,12 +229,21 @@ static void strToCoords(NSString *str, CLLocationCoordinate2D **coordsOut, NSUIn
     *coordsLenOut = read;
 }
 
+#if TARGET_OS_IPHONE
 @interface UIColor (KMLExtras)
 
 // Parse a KML string based color into a UIColor.  KML colors are agbr hex encoded.
 + (UIColor *)colorWithKMLString:(NSString *)kmlColorString;
 
 @end
+#else
+@interface NSColor (KMLExtras)
+
+// Parse a KML string based color into a UIColor.  KML colors are agbr hex encoded.
++ (NSColor *)colorWithKMLString:(NSString *)kmlColorString;
+
+@end
+#endif
 
 @implementation KMLParser
 
@@ -497,11 +511,24 @@ static void strToCoords(NSString *str, CLLocationCoordinate2D **coordsOut, NSUIn
 - (void)endColor {
     flags.inColor = NO;
     
+#if TARGET_OS_IPHONE
+    // iOS code
+    
     if (flags.inLineStyle) {
         strokeColor = [UIColor colorWithKMLString:accum];
     } else if (flags.inPolyStyle) {
         fillColor = [UIColor colorWithKMLString:accum];
     }
+    
+#else
+    // OSX code
+    if (flags.inLineStyle) {
+        strokeColor = [NSColor colorWithKMLString:accum];
+    } else if (flags.inPolyStyle) {
+        fillColor = [NSColor colorWithKMLString:accum];
+    }
+    
+#endif
     
     [self clearString];
 }
@@ -844,6 +871,8 @@ static void strToCoords(NSString *str, CLLocationCoordinate2D **coordsOut, NSUIn
 
 @end
 
+#if TARGET_OS_IPHONE
+// iOS code
 @implementation UIColor (KMLExtras)
 
 + (UIColor *)colorWithKMLString:(NSString *)kmlColorString {
@@ -863,5 +892,31 @@ static void strToCoords(NSString *str, CLLocationCoordinate2D **coordsOut, NSUIn
     
     return [UIColor colorWithRed:rf green:gf blue:bf alpha:af];
 }
-
 @end
+
+#else
+// OSX code
+
+@implementation NSColor (KMLExtras)
+
++ (NSColor *)colorWithKMLString:(NSString *)kmlColorString {
+    NSScanner *scanner = [[NSScanner alloc] initWithString:kmlColorString];
+    unsigned color = 0;
+    [scanner scanHexInt:&color];
+    
+    unsigned a = (color >> 24) & 0x000000FF;
+    unsigned b = (color >> 16) & 0x000000FF;
+    unsigned g = (color >> 8) & 0x000000FF;
+    unsigned r = color & 0x000000FF;
+    
+    CGFloat rf = (CGFloat)r / 255.f;
+    CGFloat gf = (CGFloat)g / 255.f;
+    CGFloat bf = (CGFloat)b / 255.f;
+    CGFloat af = (CGFloat)a / 255.f;
+    
+    return [NSColor colorWithRed:rf green:gf blue:bf alpha:af];
+}
+@end
+
+
+#endif
