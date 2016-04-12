@@ -36,7 +36,9 @@
     
     // Add all of the MKAnnotation objects parsed from the KML file to the map.
     NSArray *annotations = [self.kmlParser points];
-    [self.map addAnnotations:annotations];
+    [self.map addAnnotation:annotations.firstObject];
+    [self.map addAnnotation:annotations.lastObject];
+//    [self.map addAnnotations:annotations];
     
     // Walk the list of overlays and annotations and create a MKMapRect that
     // bounds all of them and store it into flyTo.
@@ -60,7 +62,7 @@
     }
     
     // Position the map so that all overlays and annotations are visible on screen.
-    [self.map setVisibleMapRect:flyTo edgePadding:UIEdgeInsetsMake(100, 20, 100, 20) animated:YES];
+    [self.map setVisibleMapRect:flyTo edgePadding:UIEdgeInsetsMake(100, 150, 100, 150) animated:YES];
 }
 
 #pragma mark MKMapViewDelegate

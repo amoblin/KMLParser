@@ -34,6 +34,8 @@
     
     // Add all of the MKAnnotation objects parsed from the KML file to the map.
     NSArray *annotations = [self.kmlParser points];
+    [self.map addAnnotation:annotations.firstObject];
+    [self.map addAnnotation:annotations.lastObject];
 //    [self.map addAnnotations:annotations];
     
     // Walk the list of overlays and annotations and create a MKMapRect that
