@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="msl-vq-smR">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="msl-vq-smR">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <connections>
                                     <outlet property="delegate" destination="af2-R1-wnZ" id="xPZ-hc-6lT"/>
@@ -27,11 +27,21 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="msl-vq-smR" firstAttribute="leading" secondItem="ldR-I2-srK" secondAttribute="leadingMargin" constant="-20" id="AKP-q2-tOg"/>
                             <constraint firstItem="Tbz-Ra-Wi2" firstAttribute="top" secondItem="msl-vq-smR" secondAttribute="bottom" id="Pvp-7f-beq"/>
-                            <constraint firstItem="msl-vq-smR" firstAttribute="top" secondItem="A1J-zj-62g" secondAttribute="bottom" constant="-20" id="Rua-Uz-J89"/>
-                            <constraint firstItem="msl-vq-smR" firstAttribute="leading" secondItem="ldR-I2-srK" secondAttribute="leadingMargin" constant="-16" id="YrI-PJ-lID"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="msl-vq-smR" secondAttribute="trailing" constant="-16" id="wUE-uu-Ffe"/>
+                            <constraint firstItem="msl-vq-smR" firstAttribute="top" secondItem="A1J-zj-62g" secondAttribute="bottom" id="Rua-Uz-J89"/>
+                            <constraint firstItem="msl-vq-smR" firstAttribute="top" secondItem="ldR-I2-srK" secondAttribute="topMargin" id="UYp-1g-gm9"/>
+                            <constraint firstItem="msl-vq-smR" firstAttribute="leading" secondItem="ldR-I2-srK" secondAttribute="leadingMargin" id="YrI-PJ-lID"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="msl-vq-smR" secondAttribute="trailing" constant="-20" id="bXy-dO-xfS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="msl-vq-smR" secondAttribute="trailing" id="wUE-uu-Ffe"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Rua-Uz-J89"/>
+                                <exclude reference="YrI-PJ-lID"/>
+                                <exclude reference="wUE-uu-Ffe"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="map" destination="msl-vq-smR" id="Qhv-Cj-CC0"/>

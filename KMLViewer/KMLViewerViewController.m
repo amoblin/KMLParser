@@ -60,7 +60,7 @@
     }
     
     // Position the map so that all overlays and annotations are visible on screen.
-    self.map.visibleMapRect = flyTo;
+    [self.map setVisibleMapRect:flyTo edgePadding:UIEdgeInsetsMake(100, 20, 100, 20) animated:YES];
 }
 
 #pragma mark MKMapViewDelegate
