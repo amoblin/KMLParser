@@ -3,10 +3,11 @@
 Pod::Spec.new do |s|
 
   s.name         = "KMLParser"
-  s.version      = "1.0"
+  s.version      = "1.1"
   s.summary      = "KML Parser from Apple."
 
   s.description  = <<-DESC
+KML Parser from Apple.
                    DESC
 
   s.homepage     = "https://github.com/amoblin/KMLParser"
@@ -45,7 +46,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/amoblin/KMLParser", :tag => "1.0" }
+  s.source       = { :git => "https://github.com/amoblin/KMLParser.git", :tag => "1.1" }
 
   s.source_files  = "Classes/KMLParser.{h,m}"
   s.exclude_files = "Classes/Exclude"

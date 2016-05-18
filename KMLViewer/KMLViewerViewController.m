@@ -33,6 +33,8 @@
     // Add all of the MKOverlay objects parsed from the KML file to the map.
     NSArray *overlays = [self.kmlParser overlays];
     [self.map addOverlays:overlays];
+    MKPointAnnotation *ol = overlays[0];
+    
     
     // Add all of the MKAnnotation objects parsed from the KML file to the map.
     NSArray *annotations = [self.kmlParser points];
